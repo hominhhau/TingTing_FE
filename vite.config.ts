@@ -5,9 +5,9 @@ import polyfillNode from "rollup-plugin-polyfill-node";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), polyfillNode()],
+  plugins: [react(), tailwindcss()],
   define: {
-    global: "window", // map global -> windo
+    global: "globalThis", // Changed from "window" to "globalThis"
   },
   resolve: {
     alias: {
@@ -18,6 +18,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
+    include: ['react', 'react-dom'], // Explicitly include React
     esbuildOptions: {
       define: {
         global: "globalThis",
@@ -26,7 +27,12 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      plugins: [polyfillNode()],
+      plugins: [
+        polyfillNode({
+          // Exclude React from polyfill
+          exclude: ['react', 'react-dom']
+        })
+      ],
     },
   },
 });
