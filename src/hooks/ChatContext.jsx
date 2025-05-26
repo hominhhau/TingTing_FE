@@ -1,30 +1,18 @@
-import React from "react";
+import { createContext, useContext, useState } from "react";
 
-// Sử dụng React.createContext thay vì destructuring import
-const ChatContext = React.createContext(null);
+const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
-    const [activeTab, setActiveTab] = React.useState('chat'); // 'chat' or 'contact'
-
-    const contextValue = React.useMemo(() => ({
-        activeTab,
-        setActiveTab
-    }), [activeTab]);
+    const [activeTab, setActiveTab] = useState('chat');// 'chat' or 'contact'
 
     return (
-        <ChatContext.Provider value={contextValue}>
+        <ChatContext.Provider value={{ activeTab, setActiveTab }}>
             {children}
         </ChatContext.Provider>
     );
 };
 
-// Hook để dùng context trong các component khác
+//Hool để dùng context trong các component khác
 export const useChat = () => {
-    const context = React.useContext(ChatContext);
-    
-    if (!context) {
-        throw new Error('useChat must be used within a ChatProvider');
-    }
-    
-    return context;
-};
+    return useContext(ChatContext);
+}

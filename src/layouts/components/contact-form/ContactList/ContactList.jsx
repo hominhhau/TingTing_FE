@@ -34,7 +34,10 @@ const ContactList = () => {
     //socket 
   useEffect(() => {
   const userId = localStorage.getItem("userId");
-  if (userId) socket1.emit("add_user", userId); // đảm bảo đã add user
+  if (userId) {
+    console.log("🖥️ Web đăng ký socket:", userId);
+    socket1.emit("add_user", userId); // đảm bảo đã add user
+  }
 
   // Lắng nghe khi có lời mời được chấp nhận
   socket1.on("friend_request_accepted", ({ fromUserId }) => {
@@ -283,7 +286,7 @@ setGroupedFriends(groupedSorted);
                 <span className="text-sm">Tất cả</span>
                 <ChevronDown size={16} />
               </button>
-              {filterOpen && (
+              {/* {filterOpen && (
                 <div
                   className="absolute right-0 top-12 bg-white rounded-md shadow-lg z-10 w-[95%]"
                   onClick={handleDropdownClick}
@@ -298,7 +301,7 @@ setGroupedFriends(groupedSorted);
                     Mới truy cập
                   </button>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
           <div className="w-full h-full rounded-xs p-4">
